@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Where in the World is Beast Boy?</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- PHASE 2: OPENING SCREEN -->
+
+    <section id="opening-screen" class="screen active">
+
+        <div class="opening-container">
+
+            <img
+                src="images/opening.png"
+                alt="Where in the world is Beast Boy?"
+                class="opening-image"
+            >
+
+            <button
+                id="start-button"
+                aria-label="Begin Investigation"
+                onclick="startGame()"
+            ></button>
+
+        </div>
+
+    </section>
+
+
+    <!-- PHASE 3: ENCHANTED FOREST -->
+
+    <section id="level-one" class="screen">
+
+        <div class="game-container">
+
+            <p class="eyebrow">
+                RAVEN'S MISSING BEAST INVESTIGATION
+            </p>
+
+            <p class="case-number">
+                CASE FILE 001 / 004
+            </p>
+
+            <h1>The Enchanted Forest</h1>
+
+            <p class="clue">
+                Reports suggest that Beast Boy has
+                transformed into a little green frog.
+                Somewhere within this enchanted forest,
+                he awaits discovery.
+            </p>
+
+            <div class="investigation-stats">
+
+                <span id="case-status">
+                    ● Investigation in progress
+                </span>
+
+                <span>
+                    Attempts: <span id="attempt-count">0</span>
+                </span>
+
+            </div>
+
+
+            <!-- FOREST AND HIDDEN FROG -->
+
+            <div class="forest-scene"
+                 onclick="wrongGuess()">
+
+                <img
+                    src="images/forest.png"
+                    class="forest-image"
+                    alt="A magical forest with a hidden frog"
+                    draggable="false"
+                >
+
+                <button
+                    id="hidden-frog"
+                    aria-label="Hidden frog"
+                    onclick="findFrog(event)"
+                ></button>
+
+            </div>
+
+
+            <!-- INVESTIGATION FEEDBACK -->
+
+            <div class="status-container">
+
+                <p id="forest-status" role="status">
+                    Search carefully, Detective Raven.
+                </p>
+
+            </div>
+
+
+            <!-- GAME BUTTONS -->
+
+            <div class="game-actions">
+
+                <button
+                    id="hint-button"
+                    class="secondary-button"
+                    onclick="showHint()"
+                >
+                    Request a clue
+                </button>
+
+                <button
+                    id="next-level"
+                    class="primary-button"
+                    onclick="nextLevel()"
+                    hidden
+                >
+                    Continue to Gotham City →
+                </button>
+
+            </div>
+
+            <button
+                class="home-button"
+                onclick="goHome()"
+            >
+                ← Return to Headquarters
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- TEMPORARY LEVEL TWO SCREEN -->
+
+ 
+<section id="level-two" class="screen">
+
+    <div class="game-container">
+
+        <p class="eyebrow">
+            RAVEN'S MISSING BEAST INVESTIGATION
+        </p>
+
+        <p class="case-number">
+            CASE FILE 002 / 004
+        </p>
+
+        <h1>Gotham City</h1>
+
+        <p class="clue">
+            Beast Boy has escaped again.
+            A mysterious green bat-like creature
+            has been spotted in Gotham.
+            Batman refuses to comment.
+        </p>
+
+        <div class="investigation-stats">
+
+            <span id="gotham-case-status">
+                ● Investigation in progress
+            </span>
+
+            <span>
+                Attempts:
+                <span id="gotham-attempt-count">0</span>
+            </span>
+
+        </div>
+
+        <div class="gotham-scene"
+             onclick="wrongGothamGuess()">
+
+            <img
+                src="images/gotham.png"
+                class="gotham-image"
+                alt="Gotham City at night"
+                draggable="false"
+            >
+
+            <button
+                id="hidden-bat"
+                aria-label="Hidden green creature"
+                onclick="findBat(event)"
+            ></button>
+
+        </div>
+
+        <div class="status-container">
+
+            <p id="gotham-status" role="status">
+                Gotham needs you, Detective Raven.
+            </p>
+
+        </div>
+
+        <div class="game-actions">
+
+            <button
+                id="gotham-hint-button"
+                class="secondary-button"
+                onclick="showGothamHint()"
+            >
+                Request a clue
+            </button>
+
+            <button
+                id="gotham-next-level"
+                class="primary-button"
+                onclick="goToApartment()"
+                hidden
+            >
+                Continue to Our Apartment →
+            </button>
+
+        </div>
+
+        <button
+            class="home-button"
+            onclick="goHome()"
+        >
+            ← Return to Headquarters
+        </button>
+
+    </div>
+
+</section>
+
+<!-- PHASE 5: OUR APARTMENT -->
+
+<section id="level-three" class="screen">
+
+    <div class="game-container">
+
+        <p class="eyebrow">
+            RAVEN'S MISSING BEAST INVESTIGATION
+        </p>
+
+        <p class="case-number">
+            CASE FILE 003 / 004
+        </p>
+
+        <h1>Our R8,000 Apartment</h1>
+
+        <p class="clue">
+            Raven, an unidentified green creature
+            has been spotted inside our apartment.
+            Fortunately, the rent has been paid.
+            Unfortunately, the suspect refuses
+            to cooperate.
+        </p>
+
+        <div class="investigation-stats">
+
+            <span id="apartment-case-status">
+                ● Investigation in progress
+            </span>
+
+            <span>
+                Attempts:
+                <span id="apartment-attempt-count">0</span>
+            </span>
+
+        </div>
+
+        <div class="apartment-scene"
+             onclick="wrongApartmentGuess()">
+
+            <img
+                src="images/apartment.png"
+                class="apartment-image"
+                alt="Our cosy loft apartment"
+                draggable="false"
+            >
+
+            <button
+                id="hidden-cat"
+                aria-label="Hidden green cat"
+                onclick="findCat(event)"
+            ></button>
+
+        </div>
+
+        <div class="status-container">
+
+            <p id="apartment-status" role="status">
+                Welcome home, Detective Raven.
+            </p>
+
+        </div>
+
+        <div class="game-actions">
+
+            <button
+                id="apartment-hint-button"
+                class="secondary-button"
+                onclick="showApartmentHint()"
+            >
+                Request a clue
+            </button>
+
+            <button
+                id="apartment-next-level"
+                class="primary-button"
+                onclick="goToBali()"
+                hidden
+            >
+                Continue to Bali →
+            </button>
+
+        </div>
+
+        <button
+            class="home-button"
+            onclick="goHome()"
+        >
+            ← Return to Headquarters
+        </button>
+
+    </div>
+
+</section>
+
+<!-- PHASE 6: LOST IN BALI -->
+
+<section id="level-four" class="screen">
+
+    <div class="game-container">
+
+        <p class="eyebrow">
+            RAVEN'S MISSING BEAST INVESTIGATION
+        </p>
+
+        <p class="case-number">
+            CASE FILE 004 / 004
+        </p>
+
+        <h1>Lost in Bali</h1>
+
+        <p class="clue">
+            Raven, we've finally made it to Bali.
+            Unfortunately, somewhere between
+            shopping and sightseeing, Beast Boy
+            has disappeared again.
+
+            Local shopkeepers report sightings
+            of a suspicious green monkey.
+        </p>
+
+        <div class="investigation-stats">
+
+            <span id="bali-case-status">
+                ● Investigation in progress
+            </span>
+
+            <span>
+                Attempts:
+                <span id="bali-attempt-count">0</span>
+            </span>
+
+        </div>
+
+        <div class="bali-scene"
+             onclick="wrongBaliGuess()">
+
+            <img
+                src="images/bali.png"
+                class="bali-image"
+                alt="A beautiful Balinese shopping market"
+                draggable="false"
+            >
+
+            <button
+                id="hidden-monkey"
+                aria-label="Hidden green monkey"
+                onclick="findMonkey(event)"
+            ></button>
+
+        </div>
+
+        <div class="status-container">
+
+            <p id="bali-status" role="status">
+                One final investigation, Detective Raven.
+            </p>
+
+        </div>
+
+        <div class="game-actions">
+
+            <button
+                id="bali-hint-button"
+                class="secondary-button"
+                onclick="showBaliHint()"
+            >
+                Request a clue
+            </button>
+
+            <button
+                id="bali-next-level"
+                class="primary-button"
+                onclick="showVictory()"
+                hidden
+            >
+                Claim your reward →
+            </button>
+
+        </div>
+
+        <button
+            class="home-button"
+            onclick="goHome()"
+        >
+            ← Return to Headquarters
+        </button>
+
+    </div>
+
+</section>
+
+<!-- PHASE 7: VICTORY SCREEN -->
+
+<section id="victory-screen" class="screen">
+
+    <div class="victory-container">
+
+        <p class="eyebrow">
+            TITANS INVESTIGATION BUREAU
+        </p>
+
+        <div class="victory-trophy">🏆</div>
+
+        <h1>Mission Complete</h1>
+
+        <p class="victory-subtitle">
+            All four case files successfully solved.
+        </p>
+
+        <div class="completed-cases">
+
+            <div class="completed-case">
+                <span>🐸</span>
+                <p>Forest</p>
+                <small>✓ Solved</small>
+            </div>
+
+            <div class="completed-case">
+                <span>🦇</span>
+                <p>Gotham</p>
+                <small>✓ Solved</small>
+            </div>
+
+            <div class="completed-case">
+                <span>🐈</span>
+                <p>Apartment</p>
+                <small>✓ Solved</small>
+            </div>
+
+            <div class="completed-case">
+                <span>🐒</span>
+                <p>Bali</p>
+                <small>✓ Solved</small>
+            </div>
+
+        </div>
+
+        <div class="victory-statistics">
+
+            <div>
+                <h2 id="total-attempts">0</h2>
+                <p>Incorrect guesses</p>
+            </div>
+
+            <div>
+                <h2 id="total-hints">0</h2>
+                <p>Clues requested</p>
+            </div>
+
+        </div>
+
+        <div class="victory-certificate">
+
+            <p class="eyebrow">
+                OFFICIAL TITLE AWARDED
+            </p>
+
+            <h2>Detective Raven</h2>
+
+            <p>
+                The world's leading expert in locating
+                one particularly troublesome
+                green shapeshifter.
+            </p>
+
+        </div>
+
+        <button
+            class="primary-button"
+            onclick="revealReward()"
+        >
+            Accept your reward 🎁
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- THE SECRET REWARD -->
+
+<section id="reward-screen" class="screen">
+
+    <div class="reward-container">
+
+        <div class="reward-heart">♥</div>
+
+        <div class="reward-message">
+
+            <p class="reward-line line-one">
+                i love you,
+            </p>
+
+            <p class="reward-line line-two">
+                please accept my heart,
+            </p>
+
+            <p class="reward-line line-three">
+                my body,
+            </p>
+
+            <p class="reward-line line-four">
+                my mind &amp; my soul
+            </p>
+
+        </div>
+
+        <p class="reward-signature">
+            From Beast Boy, to Raven.
+        </p>
+
+        <button
+            class="reward-replay"
+            onclick="startGame()"
+        >
+            Relive our adventure ↻
+        </button>
+
+    </div>
+
+</section>
+<script src="script.js"></script>
+
+</body>
+</html>

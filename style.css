@@ -1,0 +1,1036 @@
+
+/* =========================
+   GLOBAL SETTINGS
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #100b1d;
+    --purple: #d9baff;
+    --green: #caff94;
+    --white: #f0e5ff;
+    --muted: #b6a3ca;
+}
+
+body {
+    background: var(--background);
+    color: var(--white);
+    font-family: Georgia, serif;
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button[hidden] {
+    display: none !important;
+}
+
+
+/* =========================
+   SCREEN SYSTEM
+========================= */
+
+.screen {
+    display: none;
+    width: 100%;
+    min-height: 100dvh;
+}
+
+.screen.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.8s ease;
+}
+
+
+/* =========================
+   PHASE 2: OPENING SCREEN
+========================= */
+
+.opening-container {
+    position: relative;
+    width: min(100vw, 150dvh);
+    aspect-ratio: 3 / 2;
+}
+
+.opening-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#start-button {
+    position: absolute;
+    left: 45.5%;
+    top: 81.5%;
+    width: 32.5%;
+    height: 8.5%;
+
+    background: transparent;
+    border: none;
+    border-radius: 50px;
+
+    transition: box-shadow 0.3s ease;
+}
+
+#start-button:hover,
+#start-button:focus-visible {
+    box-shadow: 0 0 25px var(--green);
+    background: rgba(202, 255, 148, 0.08);
+}
+
+
+/* =========================
+   PHASE 3: FOREST LEVEL
+========================= */
+
+#level-one {
+    background: radial-gradient(
+        ellipse at top,
+        #302047,
+        #100b1d 75%
+    );
+}
+
+.game-container {
+    width: min(100%, 600px);
+    padding: 25px 18px;
+    text-align: center;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 10px;
+    letter-spacing: 3px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.case-number {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.game-container h1 {
+    color: var(--purple);
+    font-size: clamp(28px, 6vw, 42px);
+    margin-bottom: 15px;
+}
+
+.clue {
+    color: #e4d3f5;
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 450px;
+    margin: 0 auto 20px;
+}
+
+
+/* =========================
+   INVESTIGATION STATISTICS
+========================= */
+
+.investigation-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: min(100%, 380px);
+    margin: 0 auto 10px;
+
+    font-size: 11px;
+    color: var(--muted);
+    gap: 10px;
+}
+
+#case-status {
+    color: var(--purple);
+}
+
+#case-status.solved {
+    color: var(--green);
+}
+
+
+/* =========================
+   FOREST ILLUSTRATION
+========================= */
+
+.forest-scene {
+    position: relative;
+
+    width: min(100%, 380px);
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    border: 1px solid #9774bc;
+    border-radius: 16px;
+
+    box-shadow:
+        0 0 30px rgba(145, 94, 201, 0.25);
+
+    cursor: crosshair;
+    user-select: none;
+}
+
+.forest-image {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* =========================
+   INVISIBLE FROG HOTSPOT
+========================= */
+
+#hidden-frog {
+    position: absolute;
+
+    top: 61.5%;
+    left: 20%;
+
+    width: 11%;
+    height: 5.5%;
+
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 50%;
+
+    cursor: pointer;
+    z-index: 2;
+}
+
+#hidden-frog:focus-visible {
+    outline: 2px solid var(--purple);
+}
+
+#hidden-frog.found {
+    border: 2px solid var(--green);
+
+    box-shadow:
+        0 0 15px var(--green),
+        0 0 30px rgba(170, 255, 119, 0.5);
+
+    animation: discoveryGlow 1.5s infinite alternate;
+}
+
+
+/* =========================
+   INVESTIGATION FEEDBACK
+========================= */
+
+.status-container {
+    min-height: 70px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px 5px;
+}
+
+#forest-status {
+    color: var(--green);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+#forest-status.success {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   GAME BUTTONS
+========================= */
+
+.game-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.primary-button,
+.secondary-button {
+    padding: 13px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.primary-button {
+    background: var(--green);
+    color: #172310;
+    border: 1px solid var(--green);
+    font-weight: bold;
+
+    box-shadow:
+        0 0 15px rgba(202, 255, 148, 0.3);
+}
+
+.primary-button:hover {
+    box-shadow: 0 0 25px var(--green);
+}
+
+.secondary-button {
+    background: rgba(48, 32, 68, 0.8);
+    color: var(--purple);
+    border: 1px solid #9774bc;
+}
+
+.secondary-button:hover {
+    background: #493263;
+}
+
+.home-button {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 25px;
+    padding: 10px;
+}
+
+
+/* =========================
+   TEMPORARY LEVEL TWO
+========================= */
+
+#level-two {
+    background: radial-gradient(
+        ellipse at center,
+        #35234d,
+        #100b1d
+    );
+}
+
+.level-intro {
+    text-align: center;
+    max-width: 650px;
+    padding: 30px;
+}
+
+.level-intro h1 {
+    font-size: clamp(32px, 6vw, 60px);
+    margin-bottom: 25px;
+    color: var(--purple);
+}
+
+.level-intro p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes discoveryGlow {
+    from {
+        box-shadow: 0 0 8px var(--green);
+    }
+
+    to {
+        box-shadow: 0 0 25px var(--green);
+    }
+}
+
+
+/* =========================
+   MOBILE RESPONSIVENESS
+========================= */
+
+@media (max-width: 480px) {
+
+    .game-container {
+        padding: 20px 14px;
+    }
+
+    .eyebrow {
+        font-size: 9px;
+        letter-spacing: 2px;
+    }
+
+    .clue {
+        font-size: 13px;
+    }
+
+    .investigation-stats {
+        font-size: 10px;
+    }
+
+    #forest-status {
+        font-size: 14px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+}
+
+/* =========================
+   PHASE 4: GOTHAM CITY
+========================= */
+
+#level-two {
+    background: radial-gradient(
+        ellipse at top,
+        #291b43,
+        #080710 80%
+    );
+}
+
+.gotham-scene {
+    position: relative;
+
+    width: min(100%, 380px);
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    border: 1px solid #9774bc;
+    border-radius: 16px;
+
+    box-shadow:
+        0 0 30px rgba(145, 94, 201, 0.3);
+
+    cursor: crosshair;
+    user-select: none;
+}
+
+.gotham-image {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* INVISIBLE BAT HOTSPOT */
+
+#hidden-bat {
+    position: absolute;
+
+    top: 15%;
+    left: 10%;
+
+    width: 15%;
+    height: 7%;
+
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 50%;
+
+    cursor: pointer;
+    z-index: 2;
+}
+
+#hidden-bat:focus-visible {
+    outline: 2px solid var(--purple);
+}
+
+#hidden-bat.found {
+    border: 2px solid var(--green);
+
+    box-shadow:
+        0 0 15px var(--green),
+        0 0 30px rgba(170, 255, 119, 0.5);
+
+    animation: discoveryGlow 1.5s infinite alternate;
+}
+
+
+/* GOTHAM STATUS */
+
+#gotham-case-status {
+    color: var(--purple);
+}
+
+#gotham-case-status.solved {
+    color: var(--green);
+}
+
+#gotham-status {
+    color: var(--green);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+#gotham-status.success {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* =========================
+   PHASE 5: OUR APARTMENT
+========================= */
+
+#level-three {
+    background: radial-gradient(
+        ellipse at top,
+        #493343,
+        #100b1d 80%
+    );
+}
+
+.apartment-scene {
+    position: relative;
+    width: min(100%, 380px);
+    margin: 0 auto;
+
+    overflow: hidden;
+    border: 1px solid #9774bc;
+    border-radius: 16px;
+
+    box-shadow:
+        0 0 30px rgba(180, 140, 100, 0.25);
+
+    cursor: crosshair;
+    user-select: none;
+}
+
+.apartment-image {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* INVISIBLE CAT HOTSPOT */
+
+#hidden-cat {
+    position: absolute;
+
+    top: 67.8%;
+    left: 16%;
+
+    width: 11%;
+    height: 4.5%;
+
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 50%;
+
+    cursor: pointer;
+    z-index: 2;
+}
+
+#hidden-cat:focus-visible {
+    outline: 2px solid var(--purple);
+}
+
+#hidden-cat.found {
+    border: 2px solid var(--green);
+
+    box-shadow:
+        0 0 15px var(--green),
+        0 0 30px rgba(170, 255, 119, 0.5);
+
+    animation: discoveryGlow 1.5s infinite alternate;
+}
+
+
+/* APARTMENT STATUS */
+
+#apartment-case-status {
+    color: var(--purple);
+}
+
+#apartment-case-status.solved {
+    color: var(--green);
+}
+
+#apartment-status {
+    color: var(--green);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+#apartment-status.success {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* =========================
+   PHASE 6: LOST IN BALI
+========================= */
+
+#level-four {
+    background: radial-gradient(
+        ellipse at top,
+        #553044,
+        #100b1d 80%
+    );
+}
+
+.bali-scene {
+    position: relative;
+    width: min(100%, 380px);
+    margin: 0 auto;
+
+    overflow: hidden;
+    border: 1px solid #9774bc;
+    border-radius: 16px;
+
+    box-shadow:
+        0 0 30px rgba(255, 180, 100, 0.25);
+
+    cursor: crosshair;
+    user-select: none;
+}
+
+.bali-image {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* INVISIBLE MONKEY HOTSPOT */
+
+#hidden-monkey {
+    position: absolute;
+
+    top: 12%;
+    left: 11%;
+
+    width: 17%;
+    height: 11%;
+
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 50%;
+
+    cursor: pointer;
+    z-index: 2;
+}
+
+#hidden-monkey:focus-visible {
+    outline: 2px solid var(--purple);
+}
+
+#hidden-monkey.found {
+    border: 2px solid var(--green);
+
+    box-shadow:
+        0 0 15px var(--green),
+        0 0 30px rgba(170, 255, 119, 0.5);
+
+    animation: discoveryGlow 1.5s infinite alternate;
+}
+
+
+/* BALI STATUS */
+
+#bali-case-status {
+    color: var(--purple);
+}
+
+#bali-case-status.solved {
+    color: var(--green);
+}
+
+#bali-status {
+    color: var(--green);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+#bali-status.success {
+    font-size: 18px;
+    font-weight: bold;
+}
+#hidden-monkey {
+    position: absolute;
+
+    top: 21.5%;
+    left: 77%;
+
+    width: 20%;
+    height: 10%;
+
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 50%;
+
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* =========================
+   PHASE 7: VICTORY SCREEN
+========================= */
+
+#victory-screen {
+    background: radial-gradient(
+        ellipse at center,
+        #352047,
+        #100b1d 80%
+    );
+}
+
+.victory-container {
+    width: min(100%, 650px);
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.victory-trophy {
+    font-size: 65px;
+    margin: 20px 0;
+    animation: trophyFloat 3s ease-in-out infinite;
+}
+
+.victory-container h1 {
+    color: var(--purple);
+    font-size: clamp(36px, 8vw, 60px);
+    margin-bottom: 15px;
+}
+
+.victory-subtitle {
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+
+/* COMPLETED CASES */
+
+.completed-cases {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 30px 0;
+}
+
+.completed-case {
+    background: rgba(217, 186, 255, 0.07);
+    border: 1px solid #59436f;
+    border-radius: 15px;
+    padding: 15px 4px;
+}
+
+.completed-case span {
+    font-size: 30px;
+}
+
+.completed-case p {
+    font-size: 12px;
+    margin: 10px 0;
+    color: var(--purple);
+}
+
+.completed-case small {
+    color: var(--green);
+    font-size: 10px;
+}
+
+
+/* FINAL STATISTICS */
+
+.victory-statistics {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 35px 0;
+}
+
+.victory-statistics h2 {
+    color: var(--green);
+    font-size: 35px;
+    margin-bottom: 5px;
+}
+
+.victory-statistics p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+
+/* DETECTIVE CERTIFICATE */
+
+.victory-certificate {
+    border-top: 1px solid #59436f;
+    border-bottom: 1px solid #59436f;
+    padding: 30px 15px;
+    margin-bottom: 35px;
+}
+
+.victory-certificate h2 {
+    color: var(--purple);
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.victory-certificate p:not(.eyebrow) {
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   SECRET REWARD SCREEN
+========================= */
+
+#reward-screen {
+    background: radial-gradient(
+        ellipse at center,
+        #291b38,
+        #08060d 75%
+    );
+}
+
+#reward-screen.active {
+    animation: rewardEntrance 2s ease both;
+}
+
+.reward-container {
+    width: min(100%, 800px);
+    padding: 40px 20px;
+    text-align: center;
+}
+
+
+/* GLOWING GREEN HEART */
+
+.reward-heart {
+    color: #b7df99;
+    font-size: clamp(100px, 20vw, 160px);
+    line-height: 1;
+    margin-bottom: 40px;
+
+    text-shadow:
+        0 0 20px #8fc76a,
+        0 0 60px rgba(143, 199, 106, 0.4);
+
+    opacity: 0;
+}
+
+#reward-screen.active .reward-heart {
+    animation:
+        revealLine 2s ease 1s both,
+        heartBeat 3s ease-in-out 3s infinite;
+}
+
+
+/* MESSAGE REVEAL */
+
+.reward-message {
+    font-family: Georgia, serif;
+    font-style: italic;
+}
+
+.reward-line {
+    opacity: 0;
+    color: #e7d9f5;
+    font-size: clamp(22px, 5vw, 38px);
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+.reward-line.line-one {
+    color: var(--purple);
+    font-size: clamp(36px, 8vw, 65px);
+    margin-bottom: 25px;
+}
+
+#reward-screen.active .line-one {
+    animation: revealLine 2s ease 3s both;
+}
+
+#reward-screen.active .line-two {
+    animation: revealLine 2s ease 5s both;
+}
+
+#reward-screen.active .line-three {
+    animation: revealLine 2s ease 7s both;
+}
+
+#reward-screen.active .line-four {
+    animation: revealLine 2s ease 9s both;
+}
+
+
+/* SIGNATURE */
+
+.reward-signature {
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-top: 45px;
+    opacity: 0;
+}
+
+#reward-screen.active .reward-signature {
+    animation: revealLine 2s ease 12s both;
+}
+
+
+/* REPLAY BUTTON */
+
+.reward-replay {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 15px;
+    margin-top: 45px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+#reward-screen.active .reward-replay {
+    animation: revealReplay 2s ease 15s both;
+}
+
+
+/* =========================
+   FINALE ANIMATIONS
+========================= */
+
+@keyframes trophyFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes rewardEntrance {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes revealLine {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+        filter: blur(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes revealReplay {
+    from {
+        opacity: 0;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes heartBeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+
+/* MOBILE ADJUSTMENTS */
+
+@media (max-width: 480px) {
+
+    .completed-cases {
+        gap: 5px;
+    }
+
+    .completed-case span {
+        font-size: 25px;
+    }
+
+    .completed-case p {
+        font-size: 10px;
+    }
+
+    .victory-statistics {
+        gap: 30px;
+    }
+
+}
+
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #reward-screen.active .reward-heart,
+    #reward-screen.active .reward-line,
+    #reward-screen.active .reward-signature,
+    #reward-screen.active .reward-replay {
+        opacity: 1;
+        visibility: visible;
+        animation: none !important;
+    }
+
+}
